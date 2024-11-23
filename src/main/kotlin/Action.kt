@@ -1,7 +1,9 @@
 package org.engine
 
+import java.io.File
 
-fun search(inputTables: List<List<String>>) {
+
+fun search(inputTables: ArrayList<List<String>>) {
     val found = mutableListOf<List<String>>()
 
     println("Enter data to search people:")
@@ -25,17 +27,22 @@ fun search(inputTables: List<List<String>>) {
     } else {
         println("No matching people found.")
     }
-
-    choseAction(inputTables)
 }
 
 
-fun printAll(inputTables: List<List<String>>) {
+fun printAll(inputTables: ArrayList<List<String>>) {
     println("=== List of people ===")
 
     for (people in inputTables) {
         println(people.joinToString(" "))
     }
+}
 
-    choseAction(inputTables)
+
+fun addPerson(inputTables: ArrayList<List<String>>, filePath: String) {
+    println("The new person data to add:")
+    val toAdd = readln()
+
+    File(filePath).appendText("\r$toAdd")
+    inputTables.add(toAdd.split(" "))
 }

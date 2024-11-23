@@ -1,15 +1,14 @@
 package org.engine
 
+import java.io.File
 
-fun main() {
-    println("Enter the number of people:")
-    val nbEntry = readln().toInt()
 
-    println("Enter all people:")
-    val inputTables = mutableListOf<List<String>>()
-    for (i in 1..nbEntry) {
-        inputTables.add(readln().split(" "))
+fun main(args: Array<String>) {
+    val filePath = args[0]
+    val inputTables = ArrayList<List<String>>()
+    File(filePath).forEachLine {
+        inputTables.add(it.split(" "))
     }
 
-    choseAction(inputTables)
+    choseAction(inputTables, filePath)
 }
