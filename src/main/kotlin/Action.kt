@@ -3,26 +3,13 @@ package org.engine
 import java.io.File
 
 
-fun search(inputTables: ArrayList<List<String>>) {
-    val found = mutableListOf<List<String>>()
-
+fun search(inputList: ArrayList<String>, inputMap: Map<String, List<Int>>) {
     println("Enter data to search people:")
     val toSearch = readln()
 
-    for (input in inputTables) {
-        var index = 0
-        for (word in input) {
-            if (word.equals(toSearch, ignoreCase = true)) {
-                found.add(input)
-                break
-            }
-            index++
-        }
-    }
-
-    if (found.isNotEmpty()) {
-        for (people in found) {
-            println(people.joinToString(" "))
+    if (toSearch.lowercase() in inputMap) {
+        for (i in inputMap[toSearch]!!) {
+            println(inputList[i])
         }
     } else {
         println("No matching people found.")
@@ -30,19 +17,28 @@ fun search(inputTables: ArrayList<List<String>>) {
 }
 
 
-fun printAll(inputTables: ArrayList<List<String>>) {
+fun printAll(inputList: ArrayList<String>) {
     println("=== List of people ===")
 
-    for (people in inputTables) {
-        println(people.joinToString(" "))
+    for (people in inputList) {
+        println(people)
     }
 }
 
 
-fun addPerson(inputTables: ArrayList<List<String>>, filePath: String) {
+fun addPerson(inputList: ArrayList<String>, inputMap: MutableMap<String, List<Int>>, filePath: String) {
     println("The new person data to add:")
     val toAdd = readln()
+    val line = toAdd.split(" ")
 
     File(filePath).appendText("\r$toAdd")
-    inputTables.add(toAdd.split(" "))
+    inputList.add(toAdd)
+
+    for (word in line) {
+        if (word.lowercase() in inputMap) {
+            inputMap[word.lowercase()] = (inputMap[word.lowercase()]!! + arrayListOf(inputList.size - 1))
+        } else {
+            inputMap[word.lowercase()] = arrayListOf(inputList.size - 1)
+        }
+    }
 }

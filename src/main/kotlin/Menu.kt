@@ -3,7 +3,7 @@ package org.engine
 import kotlin.system.exitProcess
 
 
-fun choseAction(inputTables: ArrayList<List<String>>, filePath: String) {
+fun choseAction(inputTables: ArrayList<String>, inputMap: MutableMap<String, List<Int>>, filePath: String) {
     println("""
         === Menu === 
         1. Find a person
@@ -17,7 +17,7 @@ fun choseAction(inputTables: ArrayList<List<String>>, filePath: String) {
         nextAction = readln().toInt()
     } catch (ignored: NumberFormatException) {
         println("You need to enter a number!")
-        choseAction(inputTables, filePath)
+        choseAction(inputTables, inputMap, filePath)
     }
 
     when (nextAction ) {
@@ -25,11 +25,11 @@ fun choseAction(inputTables: ArrayList<List<String>>, filePath: String) {
             println("Bye!")
             exitProcess(0)
         }
-        1 -> search(inputTables)
+        1 -> search(inputTables, inputMap)
         2 -> printAll(inputTables)
-        3 -> addPerson(inputTables, filePath)
+        3 -> addPerson(inputTables, inputMap, filePath)
         else -> println("Incorrect option! Try again.")
     }
 
-    choseAction(inputTables, filePath)
+    choseAction(inputTables, inputMap, filePath)
 }
